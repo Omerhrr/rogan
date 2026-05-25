@@ -469,6 +469,8 @@ function AboutSection() {
 
 // ─── Chart Section ───────────────────────────────────────────────────
 
+const DEXTOOLS_WIDGET_URL = 'https://www.dextools.io/widget-chart/en/base/pe-candle/0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
+
 function ChartSection() {
   const [iframeLoaded, setIframeLoaded] = useState(false)
   const [iframeError, setIframeError] = useState(false)
@@ -480,7 +482,7 @@ function ChartSection() {
       if (!iframeLoaded) {
         setShowFallback(true)
       }
-    }, 8000)
+    }, 10000)
     return () => clearTimeout(timer)
   }, [iframeLoaded])
 
@@ -497,22 +499,20 @@ function ChartSection() {
               Live <span className="gradient-text">Chart</span>
             </h2>
             <p className="text-zinc-500 text-sm sm:text-base max-w-lg mx-auto">
-              Real-time price chart powered by DexScreener. Track ROGAN&apos;s performance on the Base network.
+              Real-time price chart powered by DexTools. Track ROGAN&apos;s performance on the Base network.
             </p>
           </div>
         </FadeInSection>
 
         <FadeInSection delay={0.1}>
-          <div className="glass-card rounded-2xl overflow-hidden relative" style={{ minHeight: '600px' }}>
-            {/* Iframe - always rendered so it can load */}
+          <div className="glass-card rounded-2xl overflow-hidden relative" style={{ minHeight: '550px' }}>
+            {/* DexTools Widget Iframe */}
             {!iframeError && (
               <iframe
-                src={`${DEXSCREENER_URL}?embed=1&theme=dark&info=0&trades=0`}
+                src={DEXTOOLS_WIDGET_URL}
                 className="w-full"
-                style={{ height: '600px', border: 'none' }}
-                title="ROGAN Price Chart"
-                allow="clipboard-write"
-                sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"
+                style={{ height: '550px', border: 'none' }}
+                title="ROGAN Price Chart — DexTools"
                 onLoad={() => setIframeLoaded(true)}
                 onError={() => setIframeError(true)}
               />
@@ -522,7 +522,7 @@ function ChartSection() {
             {!iframeLoaded && !iframeError && !showFallback && (
               <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm z-10">
                 <div className="w-10 h-10 border-2 border-neon/30 border-t-neon rounded-full animate-spin mb-4" />
-                <p className="text-zinc-400 text-sm">Loading chart...</p>
+                <p className="text-zinc-400 text-sm">Loading chart from DexTools...</p>
               </div>
             )}
 
@@ -534,27 +534,27 @@ function ChartSection() {
                 </div>
                 <h3 className="text-xl font-bold text-zinc-200 mb-2">Chart Preview</h3>
                 <p className="text-zinc-500 text-sm text-center max-w-md mb-8">
-                  The live chart couldn&apos;t load in this preview. Click below to view the full interactive chart on DexScreener or DexTools.
+                  The live chart couldn&apos;t load in this preview. Click below to view the full interactive chart on DexTools or DexScreener.
                 </p>
                 <div className="flex flex-col sm:flex-row items-center gap-3">
                   <a
-                    href={DEXSCREENER_URL}
+                    href={DEXTOOLS_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neon text-black font-semibold text-sm hover:bg-neon-dim transition-colors glow-green-sm"
                   >
                     <BarChart3 className="w-4 h-4" />
-                    Open DexScreener
+                    Open DexTools
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                   <a
-                    href={DEXTOOLS_URL}
+                    href={DEXSCREENER_URL}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card text-cyan font-semibold text-sm hover:border-cyan/30 transition-all"
                   >
                     <BarChart3 className="w-4 h-4" />
-                    Open DexTools
+                    Open DexScreener
                     <ExternalLink className="w-3.5 h-3.5" />
                   </a>
                 </div>
@@ -566,16 +566,6 @@ function ChartSection() {
         <FadeInSection delay={0.2}>
           <div className="flex flex-wrap items-center justify-center gap-3 mt-6">
             <a
-              href={DEXSCREENER_URL}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-card text-sm font-medium text-zinc-300 hover:text-neon hover:border-neon/30 transition-all"
-            >
-              <BarChart3 className="w-4 h-4" />
-              View on DexScreener
-              <ArrowUpRight className="w-3.5 h-3.5" />
-            </a>
-            <a
               href={DEXTOOLS_URL}
               target="_blank"
               rel="noopener noreferrer"
@@ -583,6 +573,16 @@ function ChartSection() {
             >
               <BarChart3 className="w-4 h-4" />
               View on DexTools
+              <ArrowUpRight className="w-3.5 h-3.5" />
+            </a>
+            <a
+              href={DEXSCREENER_URL}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl glass-card text-sm font-medium text-zinc-300 hover:text-neon hover:border-neon/30 transition-all"
+            >
+              <BarChart3 className="w-4 h-4" />
+              View on DexScreener
               <ArrowUpRight className="w-3.5 h-3.5" />
             </a>
           </div>
