@@ -29,7 +29,8 @@ import { Badge } from '@/components/ui/badge'
 
 // ─── Data ───────────────────────────────────────────────────────────
 
-const CONTRACT_ADDRESS = '0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
+const TOKEN_ADDRESS = '0x6914D994d82Bf0cC9d64cF32978d81868Ac5f1a9'
+const LP_ADDRESS = '0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
 const DEXSCREENER_URL = 'https://dexscreener.com/base/0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
 const DEXTOOLS_URL = 'https://www.dextools.io/app/base/pair-explorer/0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
 const UNISWAP_URL = 'https://app.uniswap.org'
@@ -73,7 +74,7 @@ const faqs = [
   },
   {
     q: 'How can I buy Rogan?',
-    a: 'You can buy ROGAN on Uniswap V2 through the Base network. Simply connect your wallet (like MetaMask or Coinbase Wallet), ensure you have ETH on Base for gas, and swap for ROGAN using the contract address. Always verify the contract address before trading.',
+    a: 'You can buy ROGAN on Uniswap V2 through the Base network. Simply connect your wallet (like MetaMask or Coinbase Wallet), ensure you have ETH on Base for gas, and swap for ROGAN using the token contract address: 0x6914D994d82Bf0cC9d64cF32978d81868Ac5f1a9. Always verify the contract address before trading.',
   },
   {
     q: 'What is the total supply of Rogan?',
@@ -740,20 +741,38 @@ function TokenInfoSection() {
           ))}
         </div>
 
-        {/* Contract Address */}
+        {/* Contract Addresses */}
         <FadeInSection delay={0.3}>
-          <div className="glass-card rounded-xl p-5 mt-4">
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-              <div className="flex items-center gap-3 min-w-0">
-                <div className="w-10 h-10 rounded-lg bg-neon/10 flex items-center justify-center shrink-0">
-                  <Lock className="w-5 h-5 text-neon" />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+            {/* Token Contract */}
+            <div className="glass-card rounded-xl p-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-lg bg-neon/10 flex items-center justify-center shrink-0">
+                    <Coins className="w-5 h-5 text-neon" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-zinc-500 mb-0.5">Token Contract</div>
+                    <div className="text-sm font-mono text-zinc-300 truncate">{TOKEN_ADDRESS}</div>
+                  </div>
                 </div>
-                <div className="min-w-0">
-                  <div className="text-xs text-zinc-500 mb-0.5">Contract Address</div>
-                  <div className="text-sm font-mono text-zinc-300 truncate">{CONTRACT_ADDRESS}</div>
-                </div>
+                <CopyButton text={TOKEN_ADDRESS} />
               </div>
-              <CopyButton text={CONTRACT_ADDRESS} />
+            </div>
+            {/* Liquidity Pool */}
+            <div className="glass-card rounded-xl p-5">
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+                <div className="flex items-center gap-3 min-w-0">
+                  <div className="w-10 h-10 rounded-lg bg-cyan/10 flex items-center justify-center shrink-0">
+                    <Lock className="w-5 h-5 text-cyan" />
+                  </div>
+                  <div className="min-w-0">
+                    <div className="text-xs text-zinc-500 mb-0.5">Liquidity Pool (Uniswap V2)</div>
+                    <div className="text-sm font-mono text-zinc-300 truncate">{LP_ADDRESS}</div>
+                  </div>
+                </div>
+                <CopyButton text={LP_ADDRESS} />
+              </div>
             </div>
           </div>
         </FadeInSection>
