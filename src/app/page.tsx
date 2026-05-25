@@ -16,6 +16,7 @@ import {
   BarChart3,
   ChevronDown,
   ArrowUpRight,
+  FileText,
 } from 'lucide-react'
 import {
   Accordion,
@@ -36,6 +37,7 @@ const DEXTOOLS_URL = 'https://www.dextools.io/app/base/pair-explorer/0x1b0fb286f
 const UNISWAP_URL = 'https://app.uniswap.org'
 const X_URL = 'https://x.com/rogan_coin'
 const TELEGRAM_URL = 'https://t.me/+4TVCiHL8PEE0YTk1'
+const WHITEPAPER_URL = '/rogan-whitepaper.pdf'
 
 const usdToRogan = [
   { usd: 1, rogan: '760,079.087' },
@@ -185,6 +187,7 @@ function Navbar() {
     { label: 'About', href: '#about' },
     { label: 'Chart', href: '#chart' },
     { label: 'Converter', href: '#converter' },
+    { label: 'Whitepaper', href: WHITEPAPER_URL },
     { label: 'FAQ', href: '#faq' },
   ]
 
@@ -214,6 +217,8 @@ function Navbar() {
               <a
                 key={link.href}
                 href={link.href}
+                target={link.href.startsWith('/') ? '_blank' : undefined}
+                rel={link.href.startsWith('/') ? 'noopener noreferrer' : undefined}
                 className="px-4 py-2 text-sm text-zinc-400 hover:text-neon transition-colors rounded-lg hover:bg-white/5"
               >
                 {link.label}
@@ -260,6 +265,8 @@ function Navbar() {
                   key={link.href}
                   href={link.href}
                   onClick={() => setMenuOpen(false)}
+                  target={link.href.startsWith('/') ? '_blank' : undefined}
+                  rel={link.href.startsWith('/') ? 'noopener noreferrer' : undefined}
                   className="block px-4 py-3 text-zinc-400 hover:text-neon transition-colors rounded-lg hover:bg-white/5"
                 >
                   {link.label}
@@ -365,17 +372,26 @@ function HeroSection() {
           className="flex flex-col sm:flex-row items-center justify-center gap-4"
         >
           <a
-            href="#chart"
+            href={WHITEPAPER_URL}
+            target="_blank"
+            rel="noopener noreferrer"
             className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl glass-card border border-white/10 text-zinc-200 font-semibold hover:border-neon/30 hover:text-neon transition-all group"
           >
+            <FileText className="w-4 h-4" />
+            Read Whitepaper
+          </a>
+          <a
+            href="#chart"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-neon text-black font-bold hover:bg-neon-dim transition-colors glow-green animate-pulse-glow"
+          >
             View Chart
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            <ArrowRight className="w-4 h-4" />
           </a>
           <a
             href={UNISWAP_URL}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl bg-neon text-black font-bold hover:bg-neon-dim transition-colors glow-green animate-pulse-glow"
+            className="inline-flex items-center gap-2 px-8 py-3.5 rounded-xl glass-card border border-neon/30 text-neon font-semibold hover:bg-neon/10 transition-all"
           >
             Buy ROGAN Now
             <ExternalLink className="w-4 h-4" />
@@ -828,6 +844,7 @@ function Footer() {
   const socialLinks = [
     { label: 'X (Twitter)', href: X_URL, icon: XIcon },
     { label: 'Telegram', href: TELEGRAM_URL, icon: TelegramIcon },
+    { label: 'Whitepaper', href: WHITEPAPER_URL, icon: FileText },
     { label: 'DexScreener', href: DEXSCREENER_URL, icon: BarChart3 },
     { label: 'DexTools', href: DEXTOOLS_URL, icon: BarChart3 },
     { label: 'Uniswap', href: UNISWAP_URL, icon: Coins },
