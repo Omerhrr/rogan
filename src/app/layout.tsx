@@ -28,7 +28,7 @@ export const metadata: Metadata = {
     "streaming",
   ],
   icons: {
-    icon: "/rogan-logo.png",
+    icon: "/rogan-logo.jpg",
   },
   openGraph: {
     title: "ROGAN - The Base Chain Memecoin",

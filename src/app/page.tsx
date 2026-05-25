@@ -200,7 +200,7 @@ function Navbar() {
           {/* Logo */}
           <a href="#" className="flex items-center gap-2.5 group">
             <img
-              src="/rogan-logo.png"
+              src="/rogan-logo.jpg"
               alt="Rogan Logo"
               className="w-9 h-9 rounded-lg group-hover:shadow-[0_0_15px_rgba(0,255,136,0.3)] transition-shadow"
             />
@@ -470,6 +470,20 @@ function AboutSection() {
 // ─── Chart Section ───────────────────────────────────────────────────
 
 function ChartSection() {
+  const [iframeLoaded, setIframeLoaded] = useState(false)
+  const [iframeError, setIframeError] = useState(false)
+  const [showFallback, setShowFallback] = useState(false)
+
+  // Show fallback after a timeout if iframe hasn't loaded
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      if (!iframeLoaded) {
+        setShowFallback(true)
+      }
+    }, 8000)
+    return () => clearTimeout(timer)
+  }, [iframeLoaded])
+
   return (
     <section id="chart" className="py-20 md:py-28 relative">
       <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-neon/20 to-transparent" />
@@ -489,14 +503,63 @@ function ChartSection() {
         </FadeInSection>
 
         <FadeInSection delay={0.1}>
-          <div className="glass-card rounded-2xl overflow-hidden">
-            <iframe
-              src={`${DEXSCREENER_URL}?embed=1&theme=dark&info=0`}
-              className="w-full"
-              style={{ height: '600px', border: 'none' }}
-              title="ROGAN Price Chart"
-              allow="clipboard-write"
-            />
+          <div className="glass-card rounded-2xl overflow-hidden relative" style={{ minHeight: '600px' }}>
+            {/* Iframe - always rendered so it can load */}
+            {!iframeError && (
+              <iframe
+                src={`${DEXSCREENER_URL}?embed=1&theme=dark&info=0&trades=0`}
+                className="w-full"
+                style={{ height: '600px', border: 'none' }}
+                title="ROGAN Price Chart"
+                allow="clipboard-write"
+                sandbox="allow-scripts allow-same-origin allow-popups allow-forms allow-popups-to-escape-sandbox"
+                onLoad={() => setIframeLoaded(true)}
+                onError={() => setIframeError(true)}
+              />
+            )}
+
+            {/* Loading indicator */}
+            {!iframeLoaded && !iframeError && !showFallback && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm z-10">
+                <div className="w-10 h-10 border-2 border-neon/30 border-t-neon rounded-full animate-spin mb-4" />
+                <p className="text-zinc-400 text-sm">Loading chart...</p>
+              </div>
+            )}
+
+            {/* Fallback when iframe can't load */}
+            {(iframeError || showFallback) && !iframeLoaded && (
+              <div className="absolute inset-0 flex flex-col items-center justify-center bg-black/90 backdrop-blur-md z-10 p-8">
+                <div className="w-20 h-20 rounded-2xl bg-neon/10 flex items-center justify-center mb-6">
+                  <BarChart3 className="w-10 h-10 text-neon" />
+                </div>
+                <h3 className="text-xl font-bold text-zinc-200 mb-2">Chart Preview</h3>
+                <p className="text-zinc-500 text-sm text-center max-w-md mb-8">
+                  The live chart couldn&apos;t load in this preview. Click below to view the full interactive chart on DexScreener or DexTools.
+                </p>
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <a
+                    href={DEXSCREENER_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-neon text-black font-semibold text-sm hover:bg-neon-dim transition-colors glow-green-sm"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    Open DexScreener
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                  <a
+                    href={DEXTOOLS_URL}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl glass-card text-cyan font-semibold text-sm hover:border-cyan/30 transition-all"
+                  >
+                    <BarChart3 className="w-4 h-4" />
+                    Open DexTools
+                    <ExternalLink className="w-3.5 h-3.5" />
+                  </a>
+                </div>
+              </div>
+            )}
           </div>
         </FadeInSection>
 
@@ -759,7 +822,7 @@ function Footer() {
           {/* Logo & Description */}
           <div className="flex flex-col items-center md:items-start gap-3">
             <a href="#" className="flex items-center gap-2.5">
-              <img src="/rogan-logo.png" alt="Rogan Logo" className="w-8 h-8 rounded-lg" />
+              <img src="/rogan-logo.jpg" alt="Rogan Logo" className="w-8 h-8 rounded-lg" />
               <span className="text-lg font-bold gradient-text">ROGAN</span>
             </a>
             <p className="text-xs text-zinc-600 text-center md:text-left max-w-xs">
