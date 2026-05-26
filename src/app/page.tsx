@@ -486,7 +486,7 @@ function AboutSection() {
 
 // ─── Chart Section ───────────────────────────────────────────────────
 
-const DEXTOOLS_WIDGET_URL = 'https://www.dextools.io/app/base/pair-explorer/0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a'
+const DEXTOOLS_WIDGET_URL = 'https://www.dextools.io/widget-chart/en/base/pe-light/0x1b0fb286fd0f0b48e9af0a5b7bdd2fabda60a55a?theme=dark&chartType=1&chartResolution=1&drawingToolbars=false&showTradeHistory=true&chartInUsd=true&headerColor=1F2937&tvPlatformColor=1F2937&tvPaneColor=1F2937&tradeHistoryColor=1F2937'
 
 function ChartSection() {
   const [iframeLoaded, setIframeLoaded] = useState(false)
